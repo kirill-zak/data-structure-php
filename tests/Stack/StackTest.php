@@ -12,7 +12,6 @@ final class StackTest extends TestCase
     private const ELEMENTS_SIZE_4 = 4;
     private const ELEMENTS_SIZE_12 = 12;
     private const POP_ITEM_LIST = [57, 24, 95, 14];
-    private const POP_EXPECTED_ITEM = 14;
     private const PUSH_ITEM = 56;
 
     /**
@@ -58,11 +57,11 @@ final class StackTest extends TestCase
     {
         $stack = $this->createStack();
 
-        $this->pushItemList($stack, self::POP_ITEM_LIST);
+        $this->pushItemList($stack);
 
-        $result = $stack->pop();
+        $result = $this->getItemListFromStack($stack);
 
-        $this->assertEquals(self::POP_EXPECTED_ITEM, $result);
+        $this->assertEquals($this->createPopExpectedResult(), $result);
     }
 
     public function testPush(): void
@@ -88,13 +87,33 @@ final class StackTest extends TestCase
         }
     }
 
-    /**
-     * @param list<int> $itemList
-     */
-    public function pushItemList(StackInterface $stack, array $itemList): void
+    private function pushItemList(StackInterface $stack): void
     {
-        foreach ($itemList as $item) {
+        foreach (self::POP_ITEM_LIST as $item) {
             $stack->push($item);
         }
+    }
+
+    /**
+     * @param StackInterface $stack
+     * @return list<mixed>
+     */
+    private function getItemListFromStack(StackInterface $stack): array
+    {
+        $result = [];
+
+        for ($i = 0, $iMax = count(self::POP_ITEM_LIST); $i < $iMax; $i++) {
+            $result[] = $stack->pop();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function createPopExpectedResult(): array
+    {
+        return array_reverse(self::POP_ITEM_LIST);
     }
 }

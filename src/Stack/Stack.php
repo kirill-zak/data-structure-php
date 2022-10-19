@@ -19,6 +19,9 @@ final class Stack implements StackInterface
         return array_pop($this->itemList);
     }
 
+    /**
+     * @param mixed $item
+     */
     public function push(mixed $item): void
     {
         $this->itemList[] = $item;

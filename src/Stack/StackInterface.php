@@ -9,6 +9,9 @@ interface StackInterface
      */
     public function pop(): mixed;
 
+    /**
+     * @param mixed $item
+     */
     public function push(mixed $item): void;
 
     public function getSize(): int;
